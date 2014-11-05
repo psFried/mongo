@@ -51,6 +51,11 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.29'
         // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
+
+	    // If hibernate isn't being used, then this dependency needs to be declared explicitly
+	    // other plugins use it but don't declare it as a dependency, so they break when you remove the
+	    // Hibernate plugin
+	    compile "net.sf.ehcache:ehcache-core:2.4.8"
     }
 
     plugins {
@@ -62,8 +67,10 @@ grails.project.dependency.resolution = {
         compile ':cache:1.1.8'
         compile ":asset-pipeline:1.9.9"
 
+	    compile ":mongodb:3.0.2"
+
         // plugins needed at runtime but not for compilation
-        runtime ":hibernate4:4.3.6.1" // or ":hibernate:3.6.10.18"
+        //runtime ":hibernate4:4.3.6.1" // or ":hibernate:3.6.10.18"
         runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.1"
 
