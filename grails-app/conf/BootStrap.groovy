@@ -29,14 +29,15 @@ class BootStrap {
 	    Parent.collection.remove(new BasicDBObject())
 
 	    Child kid1 = new Child(name: 'Jill', age: 7).save()
+	    Child kid2 = new Child(name: 'Josephine', age: 9).save()
 
 	    Parent mommy = new Parent(name: 'Jane', age: 35)
-	    mommy.addToChildren(kid1)
+	    mommy.addToChildren(kid1).addToChildren(kid2)
 	    mommy.save()
 
 	    Parent daddy = new Parent(name: 'Jack', age: 32)
 	    daddy.setSpouse(mommy)
-	    daddy.addToChildren(kid1)
+	    daddy.addToChildren(kid1).addToChildren(kid2)
 	    daddy.save()
 
 	    mommy.setSpouse(daddy)
