@@ -2,6 +2,8 @@ import com.mongodb.BasicDBObject
 import grails.mongodb.geo.Point
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.grailsandales.BlackBox
+import org.grailsandales.Child
+import org.grailsandales.Parent
 
 class BootStrap {
 
@@ -20,8 +22,29 @@ class BootStrap {
 		    new BlackBox(location: new Point(-82.111, 40.555), metadata: new JSONObject(name: 'Phil', interests: ['rainbows', 'butterflies', 'long walks on the beach'])).save()
 
 	    }
+
+	    /////////// parent and child example ///////////
+
+	    Child.collection.remove(new BasicDBObject())
+	    Parent.collection.remove(new BasicDBObject())
+
+	    Child kid1 = new Child(name: 'Jill', age: 7).save()
+
+	    Parent mommy = new Parent(name: 'Jane', age: 35)
+	    mommy.addToChildren(kid1)
+	    mommy.save()
+
+	    Parent daddy = new Parent(name: 'Jack', age: 32)
+	    daddy.setSpouse(mommy)
+	    daddy.addToChildren(kid1)
+	    daddy.save()
+
+	    mommy.setSpouse(daddy)
+	    mommy.save(flush: true)
+
     }
 
     def destroy = {
     }
+
 }
